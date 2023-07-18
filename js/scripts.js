@@ -1,9 +1,6 @@
 $(document).ready(function(){
 
     function Buscardatos(){
-        var nromatriculaIN = $("#nromatricula").val();
-        var periomatriculaIN = $("#periodomatricula").val();
-        var apellidosIN = $("#apellidos").val();
         var inputs = $(".form-control");
         var todosllenos = true;
 
@@ -17,7 +14,7 @@ $(document).ready(function(){
  
         if(todosllenos){
             $.ajax({
-                url: 'controllers/alumno.controller.php',
+                url: 'controllers/cliente.controller.php',
                 type: 'POST',
                 data: { operacion : 'buscar',
                         nromatricula : nromatriculaIN,

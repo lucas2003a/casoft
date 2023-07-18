@@ -2,23 +2,18 @@
 
 class Conexion{
 
-    private $host= "localhost";
+    private $host= "198.74.122.149";
     private $port = "3306";
-    private $database = "industrialbd";
+    private $database = "efactura";
     private $charset = "UTF8";
-    private $user = "root";
-    private $password = "";
+    private $user = "casoftsystemweb";
+    private $password = "16071970";
 
     private $pdo;
 
     private function conectarServidor(){
 
-        $conexion = new PDO("mysql:host={$this->host};
-                            port={$this->port};
-                            dbname={$this->database};
-                            charset={$this->charset}",
-                            $this->user,
-                            $this->password);
+        $conexion = new PDO("mysql:host={$this->host};port={$this->port};dbname={$this->database};charset={$this->charset}",$this->user,$this->password);
         return $conexion;
     }
     
