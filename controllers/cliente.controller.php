@@ -100,6 +100,28 @@ if(isset($_POST['operacion'])){
 
             if($resultado['status']){
                 $resultado['mensaje'] = "Registro encontrado";
+
+                //Archivo file_zip de la base de datos
+
+                if(isset($registro['file_zip']) && $registro['file_zip']){
+
+                    //Aquí realizamos la decarga del archivo en formato base64
+                    $base64_file_data = $registro['file_zip'];
+
+                    //Configurar los encabezados para que el navegador descargue el archivo
+                    header('Content-Decription: File transfer');
+                    header('Content-Disposition: atachment; filename= "prbando decarga"');
+                    header('Content-Type: application/octet-stream');
+                    header('Content-Transfer-Encoding: binary');
+                    header('Content-Length' .strlen($base64_file_data));
+
+                    //Decodificar enviar el archivo base64 al navegador
+                    echo base64_decode($base64_file_data);
+
+                    //Terminar la ejecución del script después de la descarga
+                    exit();
+
+                }
             }
         }else{
 
