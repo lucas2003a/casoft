@@ -109,7 +109,7 @@ if(isset($_POST['operacion'])){
                     $base64_file_data = $registro['file_zip'];
 
                     //Configurar los encabezados para que el navegador descargue el archivo
-                    header('Content-Decription: File transfer');
+                    header('Content-Description: File transfer');
                     header('Content-Disposition: atachment; filename= "prbando decarga"');
                     header('Content-Type: application/octet-stream');
                     header('Content-Transfer-Encoding: binary');

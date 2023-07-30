@@ -1,36 +1,59 @@
 $(document).ready(function(){
 
     function Buscardatos(){
-        var inputs = $(".form-control");
-        var todosllenos = true;
+        var emisor_rucIN = $("#emisor_ruc").val();
+        var emisor_docIN = $("input[name='emisor_doc']:checked").val();
+        var emisor_serieIN = $("#emisor_serie").val();
+        var emisor_numeroIN = $("#emisor_numero").val();
+        var emisor_fechaIN = $("#emisor_fecha").val();
+        var cliente_rucIN = $("#cliente_ruc").val();
 
-        inputs.each(function(){
-            if($(this).val() === ""){
-                todosllenos = false;
+        var fecha_parts = emisor_fechaIN.split("/");
+        if (fecha_parts.length === 3){
+            emisor_fechaIN = fecha_parts[2]+"/"+fecha_parts[1]+"/"+fecha_parts[0]
+        }
 
-                return false;
-            }
-        });
+
+        var campos_vacios = [];
+
+        if(emisor_rucIN === "") campos_vacios.push("Ruc emisor");
+        if(!$("input[name='emisor_doc']").is(":checked")) campos_vacios.push("Tipo de documento");
+        if(emisor_serieIN === "") campos_vacios.push("Número de serie");
+        if(emisor_numeroIN === "") campos_vacios.push("Número de emisor");
+        if(emisor_fechaIN === "") campos_vacios.push("Fecha de emisión");
+        if(cliente_rucIN === "") campos_vacios.push("Ruc del cliente");
  
-        if(todosllenos){
+        if(campos_vacios.length === 0){
             $.ajax({
                 url: 'controllers/cliente.controller.php',
                 type: 'POST',
-                data: { operacion : 'buscar',
-                        nromatricula : nromatriculaIN,
-                        periodomatricula : periomatriculaIN,
-                        apellidos : apellidosIN
+                data: { operacion: 'buscar',
+                        emisor_ruc: emisor_rucIN,
+                        emisor_doc: emisor_docIN,
+                        emisor_serie: emisor_serieIN,
+                        emisor_numero: emisor_numeroIN,
+                        emisor_fecha: emisor_fechaIN,
+                        cliente_ruc: cliente_rucIN
                     },
                 dataType: 'JSON',
                 success: function(result){
                     console.log(result);
                     if(result["status"]){
 
-                        var url = "views/img/179662_104059769669882_100001975771947_26300_772872_n.jpg";
-                        var a = $("<a>").attr("href",url).attr("download","archivo");
-                        $("body").append(a);
-                        a[0].click();
-                        a.remove();
+                        //descarga del archivo base64
+                        var base64_file_data = result["datos"]["file_zip"];
+                        var file_name = 'nombreZip';
+
+                        //Crear y simular el enlace de descarga
+                        var a = document.createElement("a");
+
+                        a.href = "data:application/octet-stream;base64," + base64_file_data;
+                        a.download = file_name;
+                        a.style.display = 'none';
+
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
 
                     }else{
               Swal.fire({
@@ -46,9 +69,9 @@ $(document).ready(function(){
           Swal.fire({
             position: 'midle-center',
             icon: 'error',
-            title: 'Llene todo los campos',
+            title: 'Llene todo los campos: '+ campos_vacios.join(", "),
             showConfirmButton: false,
-            timer: 1500
+            timer: 5500
           });
         }
     }

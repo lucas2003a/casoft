@@ -35,22 +35,23 @@
               </div>
               <div class="col-md-12 m-4">
                 <label for="emisor_doc" class="form-label fw-bolder"> Tipo de documento:</label>
-              <div class="checkbox mx-4">
-                <div class="factura-electronica">
-                  <input class="form-check-input" type="radio" id="factura-electronica" name="emisor_doc" value="01">
-                  <label class="form-check-label  fw-bolder" for="factura-electronica">Factura electrónica</label>
-                </div>
-                <div class="boleta-venta-electronica">
-                  <input type="radio" class="form-check-input" id="boleta-venta-electronica" name="emisor_doc" value="03">
-                  <label for="boleta-venta-electronica" class="form-check-label fw-bolder">Boleta de venta electrónica</label>
-                </div>
-                <div class="nota-credito">
-                  <input type="radio" class="form-check-input"  id="nota-credito" name="emisor_doc" value="07">
-                  <label for="nota-credito" class="form-check-label  fw-bolder">Nota de crédito</label>
-                </div>
-                <div class="guia-remision">
-                  <input type="radio" class="form-check-input" id="guia-remision" name="emisor_doc" value="09">
-                  <label for="guia-remision" class="form-check-label fw-bolder">Guía de remisión</label>
+                <div class="checkbox mx-4">
+                  <div class="factura-electronica">
+                    <input class="form-check-input" type="radio" id="factura-electronica" name="emisor_doc" value="01">
+                    <label class="form-check-label  fw-bolder" for="factura-electronica">Factura electrónica</label>
+                  </div>
+                  <div class="boleta-venta-electronica">
+                    <input type="radio" class="form-check-input" id="boleta-venta-electronica" name="emisor_doc" value="03">
+                    <label for="boleta-venta-electronica" class="form-check-label fw-bolder">Boleta de venta electrónica</label>
+                  </div>
+                  <div class="nota-credito">
+                    <input type="radio" class="form-check-input"  id="nota-credito" name="emisor_doc" value="07">
+                    <label for="nota-credito" class="form-check-label  fw-bolder">Nota de crédito</label>
+                  </div>
+                  <div class="guia-remision">
+                    <input type="radio" class="form-check-input" id="guia-remision" name="emisor_doc" value="09">
+                    <label for="guia-remision" class="form-check-label fw-bolder">Guía de remisión</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -61,11 +62,11 @@
               </div>
               <div class="col-md-12">
                 <label for="emisor_numero" class="form-label fw-bolder">Número de emisor:</label>
-                <input type="text" class="form-control form-control-sm" id="emisor_numero" name="emisor_numero" paceholder="ingrese el número de emisor">
+                <input type="text" class="form-control form-control-sm" id="emisor_numero" name="emisor_numero" placeholder="ingrese el número de emisor">
               </div>
               <div class="col-md-12">
                 <label for="emisor_fecha" class="form-label fw-bolder">Fecha de emisión:</label>
-                <input type="text" pattern="\d{4}/\d{2}/\d{2}" class="form-control form-control-sm" oninput="formatoFecha()" id="emisor_fecha" name="emisor_fecha">
+                <input type="date" class="form-control form-control-sm" id="emisor_fecha" name="emisor_fecha" placeholder="Fecha de emisión">
               </div>
             </div>                
             <div class="btn_">
@@ -96,14 +97,6 @@
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="js/scripts.js"></script>
-  <script>
-    function fomratoFecha(){
-      const fechaInput = document.getElementById("emisor_fecha");
-      const fecha = fechaInput.value;
-      const fechaOrdenada = fecha.split("/").reverse().join("/");
-      fechaInput.value = fechaOrdenada;    
-    }
-  </script>
 </body>
 
 </html>
