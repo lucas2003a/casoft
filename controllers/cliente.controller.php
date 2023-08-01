@@ -46,7 +46,34 @@ if(isset($_POST['operacion'])){
         */
     
         $registro = $cliente->BuscarData($datos);
+        
+        //si la consulta retorna todos los indices(columnas en la base de datos)
+        /*consulta en la base de datos: 
+        drop procedure if exists spu_buscardata;
+        delimiter $$
+        create procedure spu_buscardata
+        (
+        in emisor_ruc_   varchar(11),
+        in emisor_doc_   varchar(2),
+        in emisor_serie_ varchar(4),
+        in emisor_numero_ varchar(20),
+        in emisor_fecha_ date,
+        in cliente_ruc_  varchar(11)
+        )
+        begin
+        select * from comprobantes
+        where  emisor_ruc = emisor_ruc_
+            and  emisor_doc = emisor_doc_
+            and  emisor_serie = emisor_serie_
+            and  emisor_numero = emisor_numero_
+            and  emisor_fecha = emisor_fecha_
+            and  cliente_ruc = cliente_ruc_;
+        end$$
 
+        delimiter ;
+
+        call spu_buscardata('20606177896','01','f001','7247','2023-07-11','20534830549'); 
+        */
         if($registro){
             /*
             1.-if($registro['emisor_ruc']) utilizando esta estructura condicional directa solo evalua que exista el contenido, pero no evalua que exista la llave 'emiso_ruc', esto puede generar un error "UndefinedIndex", si no existe la llave.
@@ -98,6 +125,11 @@ if(isset($_POST['operacion'])){
                 $resultado['mensaje'] .= "no existe el ruc del cliente:" .$registro['cliente_ruc'];
             }
 
+            $ruc_emi = $registro['emisor_ruc'];
+            $doc_tipo = $registro['emisor_doc'];
+            $doc_serie = $registro['emisor_serie'];
+            $doc_numero = $registro['emisor_numero'];
+            $file_name = $ruc_emi . "-" . $doc_tipo . "-" . $doc_serie . "-" . $doc_numero;
             if($resultado['status']){
                 $resultado['mensaje'] = "Registro encontrado";
 
@@ -110,13 +142,37 @@ if(isset($_POST['operacion'])){
 
                     //Configurar los encabezados para que el navegador descargue el archivo
                     header('Content-Description: File transfer');
-                    header('Content-Disposition: atachment; filename= "prbando decarga"');
-                    header('Content-Type: application/octet-stream');
+                    header('Content-Disposition: atachment; filename= "probando decarga.zip"');
+                    header('Content-Type: application/ctet-stream'); //application/octet-stream = archivo binario
                     header('Content-Transfer-Encoding: binary');
                     header('Content-Length' .strlen($base64_file_data));
 
                     //Decodificar enviar el archivo base64 al navegador
-                    echo base64_decode($base64_file_data);
+                    $url = "../files/".$file_name.".zip";
+                    $cdata = hex2bin($base64_file_data);
+
+                    file_put_contents($url,$cdata);
+
+                    clearstatcache();
+
+                    //Define header information
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/octet-stream');
+                    header('Content-Disposition: attachment; filename="'.basename($url).'"');
+                    header('Content-Length: ' . filesize($url));
+                    header('Pragma: public');
+
+                    //Clear system output buffer
+                    flush();
+
+                    //Read the size of the file
+                    readfile($url,true);
+
+                    //Terminate from the script
+                    die();
+
+                    
+                    readfile($url, true);
 
                     //Terminar la ejecución del script después de la descarga
                     exit();

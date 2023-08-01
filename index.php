@@ -70,6 +70,7 @@
               </div>
             </div>                
             <div class="btn_">
+              <a href="controllers/download.controller.php?path=20606177896-01-F001-7247.zip">descargar</a>
               <input type="button" id="download" class="btn btn-outline-primary btn-xl" value="Buscar">       
             </div>
           </form>
