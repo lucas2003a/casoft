@@ -1,12 +1,12 @@
 $(document).ready(function(){
 
     function Buscardatos(){
-        var emisor_rucIN = $("#emisor_ruc").val();
-        var emisor_docIN = $("input[name='emisor_doc']:checked").val();
-        var emisor_serieIN = $("#emisor_serie").val();
-        var emisor_numeroIN = $("#emisor_numero").val();
-        var emisor_fechaIN = $("#emisor_fecha").val();
-        var cliente_rucIN = $("#cliente_ruc").val();
+        window.emisor_rucIN = $("#emisor_ruc").val();
+        window.emisor_docIN = $("input[name='emisor_doc']:checked").val();
+        window.emisor_serieIN = $("#emisor_serie").val();
+        window.emisor_numeroIN = $("#emisor_numero").val();
+        window.emisor_fechaIN = $("#emisor_fecha").val();
+        window.cliente_rucIN = $("#cliente_ruc").val();
 
         var fecha_parts = emisor_fechaIN.split("/");
         if (fecha_parts.length === 3){
@@ -75,7 +75,27 @@ $(document).ready(function(){
           });
         }
     }
-    $("#download").click(Buscardatos);
+    $("#buscar").click(Buscardatos);
+
+    $("#download").click(function(){
+        var file_name = emisor_rucIN+"-"+emisor_docIN+"-"+emisor_serieIN+"-"+emisor_numeroIN+".zip";
+
+        var downloadlink = $(this);
+
+        downloadlink.attr("href","controllers/download.controller.php?path="+encodeURIComponent(file_name));
+
+        // si los campos estan vacios
+        var campos_vacios = [];
+
+        if(emisor_rucIN === "") campos_vacios.push("Ruc emisor");
+        if(!$("input[name='emisor_doc']").is(":checked")) campos_vacios.push("Tipo de documento");
+        if(emisor_serieIN === "") campos_vacios.push("Número de serie");
+        if(emisor_numeroIN === "") campos_vacios.push("Número de emisor");
+        if(emisor_fechaIN === "") campos_vacios.push("Fecha de emisión");
+        if(cliente_rucIN === "") campos_vacios.push("Ruc del cliente");
+
+        if (campos_vacios-length === 0);
+    });
 });
 /*document.getElementById("download").addEventListener("click",function(){
 
@@ -98,3 +118,4 @@ Sí, el atributo  name  en un elemento de formulario HTML es utilizado para iden
 En el ejemplo anterior, al hacer coincidir el  name  del input con el  id  del campo de la tabla, se asegura que el valor del input se envíe correctamente en  $_POST['apellido'] . Esto permite utilizar ese valor en el código PHP para realizar la búsqueda en la base de datos. 
  
 Es importante tener en cuenta que el atributo  name  es diferente del atributo  id . El atributo  id  se utiliza para identificar de manera única un elemento HTML, mientras que el atributo  name  se utiliza para identificar el nombre del campo en el formulario y obtener su valor cuando se envía el formulario*/
+
