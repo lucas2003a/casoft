@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Busqueda</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -70,7 +70,7 @@
               </div>
             </div>                
             <div class="btn_">
-              <a href="#" id="download">descargar</a>
+              <a href="#" class="btn btn-info" id="download">Descargar</a>
               <input type="button" id="buscar" class="btn btn-outline-primary btn-xl" value="Buscar">       
             </div>
           </form>

@@ -37,7 +37,14 @@ $(document).ready(function(){
                     },
                 dataType: 'JSON',
                 success: function(result){
-                    console.log(result);
+                     
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: (result['mensaje']),
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                     if(result["status"]){
 
                         //descarga del archivo base64
@@ -71,7 +78,7 @@ $(document).ready(function(){
             icon: 'error',
             title: 'Llene todo los campos: '+ campos_vacios.join(", "),
             showConfirmButton: false,
-            timer: 5500
+            timer: 3500
           });
         }
     }

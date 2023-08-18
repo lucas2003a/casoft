@@ -75,6 +75,7 @@ if(isset($_POST['operacion'])){
         call spu_buscardata('20606177896','01','f001','7247','2023-07-11','20534830549'); 
         */
         if($registro){
+            $resultado['mensaje'] = "Registro encontrado";
             /*
             1.-if($registro['emisor_ruc']) utilizando esta estructura condicional directa solo evalua que exista el contenido, pero no evalua que exista la llave 'emiso_ruc', esto puede generar un error "UndefinedIndex", si no existe la llave.
             las llaves, en el id y name del html, en el controlador y el modelo, los campos de la base de datos, deben ser los mismos para no tener errores de sintaxis, ya que con estas llaves identificas al campo de la tabla del cual deseas acceder el valor.
@@ -131,7 +132,6 @@ if(isset($_POST['operacion'])){
             $doc_numero = $registro['emisor_numero'];
             $file_name = $ruc_emi . "-" . $doc_tipo . "-" . $doc_serie . "-" . $doc_numero;
             if($resultado['status']){
-                $resultado['mensaje'] = "Registro encontrado";
 
                 //Archivo file_zip de la base de datos
 
